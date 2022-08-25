@@ -20,10 +20,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="源.cpp">
+    <ClCompile Include="unsigned_char.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="find median.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="int.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

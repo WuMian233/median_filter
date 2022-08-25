@@ -149,7 +149,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="find median.cpp" />
-    <ClCompile Include="源.cpp" />
+    <ClCompile Include="int.cpp" />
+    <ClCompile Include="unsigned_char.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

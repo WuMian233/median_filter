@@ -176,7 +176,7 @@ unsigned char* median_filter(unsigned char* reflection_arr,int col,int row,int n
 		/**
 		delete []window;
 		delete []copy_window;
-		*
+		*/ /**
 	}
 	cout << "processing" << endl;
 	print_arr(processing_arr, origin_col, row);
@@ -211,13 +211,12 @@ unsigned char* median_filter1(unsigned char* reflection_arr, int col, int row, i
 	int origin_row = row - 2 * (n - 2);
 	int origin_col = col - 2 * (n - 2);
 	
-	unsigned char* processing_arr = new unsigned char[origin_col * row];
+	unsigned char* processing_arr = new unsigned char[origin_col * row];//C26451警告 算术溢出
 	multiset<unsigned char> st;
 	
 	for (int i = 0; i < row; i++)
 	{
-		//算法
-		//vector<unsigned char> processing_median;
+		
 		
 		for (int j = 0; j < origin_col;j++)
 		{
@@ -231,7 +230,7 @@ unsigned char* median_filter1(unsigned char* reflection_arr, int col, int row, i
 			{
 				auto mid = st.begin();
 				std::advance(mid, n / 2);
-				processing_arr[i * sizeof(processing_arr)*origin_col + j*sizeof(processing_arr)] = (*mid + *prev(mid, (static_cast<std::_Iter_diff_t<std::_Tree<std::_Tset_traits<unsigned char, std::less<unsigned char>, std::allocator<unsigned char>, true>>::iterator>>(1) - n % 2))) / 2;//这里有问题
+				processing_arr[i *origin_col + j] = (*mid + *prev(mid, (static_cast<std::_Iter_diff_t<std::_Tree<std::_Tset_traits<unsigned char, std::less<unsigned char>, std::allocator<unsigned char>, true>>::iterator>>(1) - n % 2))) / 2;//这里有问题
 				cout << "median:" << (*mid + *prev(mid, (static_cast<std::_Iter_diff_t<std::_Tree<std::_Tset_traits<unsigned char, std::less<unsigned char>, std::allocator<unsigned char>, true>>::iterator>>(1) - n % 2))) / 2 << endl;
 			}
 		}
@@ -258,7 +257,7 @@ unsigned char* median_filter1(unsigned char* reflection_arr, int col, int row, i
 			{
 				auto mid = st1.begin();
 				std::advance(mid, n / 2);
-				median_arr[i * sizeof(processing_arr) * origin_col + j * sizeof(processing_arr)] = (*mid + *prev(mid, (static_cast<std::_Iter_diff_t<std::_Tree<std::_Tset_traits<unsigned char, std::less<unsigned char>, std::allocator<unsigned char>, true>>::iterator>>(1) - n % 2))) / 2;
+				median_arr[i  * origin_col + j] = (*mid + *prev(mid, (static_cast<std::_Iter_diff_t<std::_Tree<std::_Tset_traits<unsigned char, std::less<unsigned char>, std::allocator<unsigned char>, true>>::iterator>>(1) - n % 2))) / 2;//C6386 写入到数组时缓冲区溢出
 			}
 		}
 		st1.clear();
@@ -278,6 +277,7 @@ unsigned char* get_median_filter(unsigned char* arr, int origin_col, int origin_
 	unsigned char* median_arr = median_filter1(big_arr, col, row, n);
 	return median_arr;
 }
+/**
 int main()
 {
 	
@@ -285,13 +285,16 @@ int main()
 	unsigned char* array = new unsigned char[35]{ zero };
 	random(array,35,0,255);
 	print_arr(array,7,5);
-	//unsigned char* median_arr = get_median_filter(array, 7, 5, 3);//5行7列 3*3中值滤波
-	unsigned char* big_arr = new unsigned char[9 * 7];
+	unsigned char* median_arr = get_median_filter(array, 7, 5, 3);//5行7列 3*3中值滤波
+	/**unsigned char* big_arr = new unsigned char[9 * 7];
 	combline(big_arr, array, 9, 7, 7, 5, 1, 1);
 	reflection_pad(big_arr, 9, 7, 1);
 	unsigned char* median_arr = median_filter1(big_arr, 9, 7, 3);
+	*//**
 	print_arr(median_arr, 7, 5);
+
 	getchar();
 	
 	return 0;
 }
+*/
